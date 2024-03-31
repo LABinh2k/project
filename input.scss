@@ -1,0 +1,81 @@
+@use "_partials";
+@use "sass:math";
+
+$font-stack: Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+    font: 100% $font-stack;
+    color: $primary-color;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    a {
+        display: block;
+        padding: 6px 12px;
+        text-decoration: none;
+    }
+}
+
+.circle {
+    $size: 100px;
+    width: $size;
+    height: $size;
+    border-radius: $size * 0.5;
+    background-color: aqua;
+}
+
+@mixin theme1($theme: DarkGray) {
+    background: $theme;
+    box-shadow: 0 0 1px rgba($theme, 0.25);
+    color: #fff;
+}
+
+.info {
+    @include theme1;
+}
+
+.alert {
+    @include theme1($theme: DarkRed);
+}
+
+.success {
+    @include theme1($theme: DarkGreen);
+}
+
+%message-shared {
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #333;
+}
+
+.message {
+    @extend %message-shared;
+}
+
+.container {
+    display: flex;
+}
+
+article[role="main"] {
+    width: math.div(600px, 960px) * 100%;
+}
+
+@mixin prefix($property, $value, $prefixes) {
+    @each $prefix in $prefixes {
+        -#{$prefix}-#{$property}: $value;
+    }
+    #{$property}: $value;
+}
+
+.gray {
+    @include prefix(filter, grayscale(50%), moz webkit);
+}
